@@ -13,7 +13,7 @@ $(function () {
     $(".hero h1").text(p.name);
     $(".hero h2").text(p.title);
     $(".hero-intro").text(p.introduction);
-    $(".profile-caption").text("Based in " + p.location);
+    $(".profile-caption").text(p.location);
     $("#about-text").text(portfolio.about.description);
     $("#year").text(new Date().getFullYear());
 

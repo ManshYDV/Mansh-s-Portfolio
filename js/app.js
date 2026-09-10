@@ -316,12 +316,18 @@ $(function () {
 
   $(".nav-menu a").on("click", function () {
     $(".nav-menu").removeClass("is-open");
-    $(".menu-toggle").attr("aria-expanded", "false");
+
+    $(".menu-toggle")
+        .removeClass("is-open")
+        .attr("aria-expanded", "false");
   });
 
   $(".menu-toggle").on("click", function () {
     const open = $(".nav-menu").toggleClass("is-open").hasClass("is-open");
-    $(this).attr("aria-expanded", open ? "true" : "false");
+
+    $(this)
+        .toggleClass("is-open", open)
+        .attr("aria-expanded", open ? "true" : "false");
   });
 
   $(".theme-button").on("click", function () {
@@ -405,8 +411,121 @@ $(function () {
   renderPortfolio();
   applyTheme(getThemePreference());
   scheduleAutoThemeCheck();
+  setupScrollReveal();
+  setupActiveNav();
+  setupScrollTop();
 
 
 });
 
+// ---------- Scroll Reveal ----------
 
+function setupScrollReveal() {
+  const elements = document.querySelectorAll(".reveal");
+
+  if (!elements.length) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    elements.forEach(function (element) {
+      element.classList.add("is-visible");
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.15
+      }
+  );
+
+  elements.forEach(function (element) {
+    observer.observe(element);
+  });
+}
+
+// ---------- Active Navbar Section ----------
+
+function setupActiveNav() {
+  const sections = document.querySelectorAll("main section[id]");
+  const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+
+  if (!sections.length || !navLinks.length) return;
+
+  const observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+
+          const id = entry.target.id;
+
+          navLinks.forEach(function (link) {
+            link.classList.remove("active");
+          });
+
+          const activeLink = document.querySelector(
+              '.nav-menu a[href="#' + id + '"]'
+          );
+
+          if (activeLink) {
+            activeLink.classList.add("active");
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -40% 0px",
+        threshold: 0
+      }
+  );
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+}
+
+window.addEventListener("scroll", function () {
+  const bottomReached =
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+
+  if (!bottomReached) return;
+
+  navLinks.forEach(function (link) {
+    link.classList.remove("active");
+  });
+
+  const contactLink = document.querySelector('.nav-menu a[href="#contact"]');
+
+  if (contactLink) {
+    contactLink.classList.add("active");
+  }
+});
+
+// ---------- Scroll To Top ----------
+
+function setupScrollTop() {
+  const scrollTopButton = document.querySelector(".scroll-top");
+
+  if (!scrollTopButton) return;
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 500) {
+      scrollTopButton.classList.add("is-visible");
+    } else {
+      scrollTopButton.classList.remove("is-visible");
+    }
+  });
+
+  scrollTopButton.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}

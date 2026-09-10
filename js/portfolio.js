@@ -297,7 +297,7 @@ const portfolio = {
       institution: "Government Polytechnic College, Dahod",
       year: "2029 – 2022",
       details: "Diploma in Computer Engineering",
-      score: "CGPA: 7.95/10.0"
+      score: "CGPA: 7.05/10.0"
     }
   ]
 

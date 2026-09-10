@@ -36,8 +36,12 @@ body {
   color: var(--text);
   font-family: "DM Sans", system-ui, sans-serif;
   line-height: 1.65;
-  transition: background .2s ease, color .2s ease;
+  transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
 }
+
+
 
 body.modal-open { overflow: hidden; }
 
@@ -268,6 +272,36 @@ h1 {
   color: var(--muted);
 }
 
+.profile-frame {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-frame img {
+  transition:
+          opacity 0.22s ease,
+          transform 0.35s ease;
+}
+
+.profile-frame:hover img {
+  transform: scale(1.03);
+}
+
+.profile-frame {
+  transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+}
+
+.profile-frame:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.profile-frame {
+  border: 2.5px solid var(--text);
+}
+
 .section-heading { margin-bottom: 48px; }
 
 .section-heading h2,
@@ -369,12 +403,24 @@ h1 {
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface);
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.10);
+  border-color: var(--text);
+}
+
+.project-card img {
+  transition: transform 0.35s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.03);
 }
 
 .project-card > img {
@@ -665,16 +711,32 @@ h1 {
     top: calc(100% + 1px);
     left: 0;
     right: 0;
-    display: none;
+
+    display: flex;
     padding: 18px;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow);
+
     flex-direction: column;
     align-items: stretch;
     gap: 3px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+
+    transition:
+            opacity 0.2s ease,
+            transform 0.2s ease,
+            visibility 0.2s ease;
   }
-  .nav-menu.is-open { display: flex; }
+
+  .nav-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
   .nav-menu a { padding: 10px 8px; }
   .theme-button { margin-top: 7px; text-align: left; }
   .theme-menu {
@@ -712,4 +774,163 @@ h1 {
   margin-right: 8px;
   position: relative;
   top: -1px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+.section {
+  padding: 112px 0;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+          opacity .65s ease,
+          transform .65s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.nav-menu a.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-menu a.active::after {
+  width: 100%;
+}
+
+  .scroll-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+
+    transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease,
+            transform 0.2s ease,
+            background-color 0.25s ease,
+            color 0.25s ease,
+            border-color 0.25s ease;
+
+    z-index: 15;
+  }
+
+  .scroll-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .scroll-top:hover {
+    background: var(--text);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
+
+.site-header,
+.project-card,
+.skill-group,
+.experience-item,
+.education-item,
+.modal-dialog,
+.profile-frame {
+  transition: background-color 0.25s ease,
+  color 0.25s ease,
+  border-color 0.25s ease,
+  box-shadow 0.25s ease;
+}
+
+.menu-toggle span {
+  width: 17px;
+  height: 1px;
+  background: var(--text);
+
+  transition:
+          transform 0.2s ease,
+          opacity 0.2s ease;
+}
+
+.menu-toggle.is-open span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.is-open span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-backdrop {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal.is-open .modal-backdrop {
+  opacity: 1;
+}
+
+.modal-dialog {
+  border-radius: 14px;
+  transform: translateY(16px) scale(0.98);
+  opacity: 0;
+  transition:
+          transform 0.25s ease,
+          opacity 0.25s ease,
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+}
+
+.modal.is-open .modal-dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }

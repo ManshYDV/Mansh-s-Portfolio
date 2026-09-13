@@ -529,3 +529,25 @@ function setupScrollTop() {
     });
   });
 }
+
+const themeToggle = document.querySelector('.theme-toggle');
+const themeSlider = document.querySelector('.theme-slider');
+
+themeToggle.addEventListener('click', (e) => {
+  const button = e.target.closest('[data-theme-choice]');
+  if (!button) return;
+
+  const theme = button.dataset.themeChoice;
+
+  const positions = {
+    light: 0,
+    auto: 1,
+    dark: 2
+  };
+
+  themeSlider.style.transform =
+      `translateX(${positions[theme] * 100}%)`;
+
+  // Your existing theme-changing logic
+  document.documentElement.dataset.theme = theme;
+});

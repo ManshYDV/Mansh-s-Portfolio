@@ -22,13 +22,33 @@
           <a href="#projects">Projects</a>
           <a href="#education">Education</a>
           <a href="#contact">Contact</a>
-          <button class="theme-button" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Theme options">
-            <span class="theme-icon">◐</span><span class="theme-label">Auto</span>
-          </button>
-          <div class="theme-menu" role="menu">
-            <button type="button" data-theme-choice="light" role="menuitem">Light</button>
-            <button type="button" data-theme-choice="dark" role="menuitem">Dark</button>
-            <button type="button" data-theme-choice="auto" role="menuitem">Auto</button>
+          
+          <div class="theme-toggle" role="radiogroup" aria-label="Theme">
+            <button
+                    type="button"
+                    data-theme-choice="light"
+                    role="radio"
+                    aria-label="Light theme">
+              ⚪
+            </button>
+
+            <button
+                    type="button"
+                    data-theme-choice="auto"
+                    role="radio"
+                    aria-label="System theme">
+              ⚙
+            </button>
+
+            <button
+                    type="button"
+                    data-theme-choice="dark"
+                    role="radio"
+                    aria-label="Dark theme">
+              ⚫
+            </button>
+
+            <span class="theme-slider"></span>
           </div>
         </div>
       </nav>
